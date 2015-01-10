@@ -1,7 +1,7 @@
 # Coursera DSS 04 Exploratory Data Analysis
 # PA01 (Plotting)
 
-# plot1.R - create PNG of first plot (histogram of Global Active Power)
+# plot3.R - create PNG of third plot (Multiple Sub-metering series vs time)
 
 # setwd("C:/Users/Administrator/Google Drive/Coursera/DataScienceSpecialization/04-ExploratoryAnalysis/prog/ExData_Plotting1")
 
@@ -38,10 +38,14 @@ graphics.off()
 # font size in example graphics smaller than default
 par(ps=12)
 
-# create Plot 1 (histogram) in the default device (screen)    
-hist(power2day$Global_active_power, col="red", xlab="Global Active Power (kilowatts)", 
-     main="Global Active Power")
+# create Plot 3 in the default device (screen)    
+with(power2day, plot(datetime, Sub_metering_1, type="l", ylab="Energy sub metering", 
+                     xlab="", col="black"))
+with(power2day, points(datetime, Sub_metering_2, type="l", col="red"))
+with(power2day, points(datetime, Sub_metering_3, type="l", col="blue"))
+legend("topright", lwd=1, col=c("black", "red", "blue"), 
+       legend=c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
 
 # write plot out to PNG file (default dims 480px X 480px)
-dev.copy(png, file="plot1.png")
+dev.copy(png, file="plot3.png")
 dev.off()

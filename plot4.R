@@ -1,7 +1,7 @@
 # Coursera DSS 04 Exploratory Data Analysis
 # PA01 (Plotting)
 
-# plot1.R - create PNG of first plot (histogram of Global Active Power)
+# plot4.R - create PNG of fourth plot (2x2 multiple plots)
 
 # setwd("C:/Users/Administrator/Google Drive/Coursera/DataScienceSpecialization/04-ExploratoryAnalysis/prog/ExData_Plotting1")
 
@@ -35,13 +35,27 @@ if (!file.exists("power2day.csv")) {
 # get a fresh start with default graphics device and settings
 graphics.off()
 
-# font size in example graphics smaller than default
-par(ps=12)
+# font size in example graphics smaller than default; set by-column 2x2 layout
+par(mfcol=c(2,2), ps=12)
 
-# create Plot 1 (histogram) in the default device (screen)    
-hist(power2day$Global_active_power, col="red", xlab="Global Active Power (kilowatts)", 
-     main="Global Active Power")
+# create Plot 4 in the default device (screen)    
 
-# write plot out to PNG file (default dims 480px X 480px)
-dev.copy(png, file="plot1.png")
+# top left
+with(power2day, plot(datetime, Global_active_power, type="l", ylab="Global Active Power", xlab=""))
+
+# bottom left
+with(power2day, plot(datetime, Sub_metering_1, type="l", ylab="Energy sub metering", 
+                     xlab="", col="black"))
+with(power2day, points(datetime, Sub_metering_2, type="l", col="red"))
+with(power2day, points(datetime, Sub_metering_3, type="l", col="blue"))
+legend("topright", lwd=1, col=c("black", "red", "blue"), 
+       legend=c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), bty="n")
+
+# top right
+with(power2day, plot(datetime, Voltage, type="l"))
+
+# bottom right
+with(power2day, plot(datetime, Global_reactive_power, type="l"))
+
+dev.copy(png, file="plot4.png")
 dev.off()
