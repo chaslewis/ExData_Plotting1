@@ -7,7 +7,7 @@
 
 # get the raw data if processed data does not exist locally
 if (!file.exists("power2day.csv")) {
-    download.file("https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip",
+    download.file("http://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip",
                   destfile="power.zip")
     unzip("power.zip")
     # read in the big power consumption table; specify column types and NA coding
