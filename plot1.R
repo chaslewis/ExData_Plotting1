@@ -16,13 +16,13 @@ if (!file.exists("power2day.csv")) {
                                      "numeric", "numeric", "numeric", "numeric"), na.strings="?")
     
     # make a POSIXct column from date and time columns
-    # (would be more efficient to filter by Date and do this later in smaller table, but this
-    #   approach allows for further exploration, e.g., different date & time ranges from full dataset)
+    # (would be more faster to filter by Date and do this later in smaller table, but this approach
+    #   allows for further exploration, e.g., different date & time ranges from full dataset)
     power$datetime <- strptime(paste(power[,1],power[,2]), format="%d/%m/%Y %H:%M:%S")
     
     # extract the two desired days    
     power2day <- power[as.Date(power$datetime) == "2007-02-01" | 
-                           as.Date(power$datetime) == "2007-02-02",  ]
+                       as.Date(power$datetime) == "2007-02-02",  ]
     # and save locally (for further exploration, other plots)
     write.csv(power2day, file="power2day.csv", row.names=FALSE)
 } else {
@@ -35,13 +35,12 @@ if (!file.exists("power2day.csv")) {
 # get a fresh start with default graphics device and settings
 graphics.off()
 
-# font size in example graphics smaller than default
-par(ps=12)
+# open PNG graphics device
+png(file="plot1.png")
 
-# create Plot 1 (histogram) in the default device (screen)    
+# write Plot 1 (histogram) to the PNG file
 hist(power2day$Global_active_power, col="red", xlab="Global Active Power (kilowatts)", 
      main="Global Active Power")
 
-# write plot out to PNG file (default dims 480px X 480px)
-dev.copy(png, file="plot1.png")
+# close device
 dev.off()

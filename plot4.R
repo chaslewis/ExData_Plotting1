@@ -16,8 +16,8 @@ if (!file.exists("power2day.csv")) {
                                      "numeric", "numeric", "numeric", "numeric"), na.strings="?")
     
     # make a POSIXct column from date and time columns
-    # (would be more efficient to filter by Date and do this later in smaller table, but this
-    #   approach allows for further exploration, e.g., different date & time ranges from full dataset)
+    # (would be more faster to filter by Date and do this later in smaller table, but this approach
+    #   allows for further exploration, e.g., different date & time ranges from full dataset)
     power$datetime <- strptime(paste(power[,1],power[,2]), format="%d/%m/%Y %H:%M:%S")
     
     # extract the two desired days    
@@ -35,10 +35,13 @@ if (!file.exists("power2day.csv")) {
 # get a fresh start with default graphics device and settings
 graphics.off()
 
-# font size in example graphics smaller than default; set by-column 2x2 layout
-par(mfcol=c(2,2), ps=12)
+# open PNG graphics device
+png(file="plot4.png")
 
-# create Plot 4 in the default device (screen)    
+# set by-column 2x2 multi-plot layout
+par(mfcol=c(2,2))
+
+# write Plot 4 to the PNG file
 
 # top left
 with(power2day, plot(datetime, Global_active_power, type="l", ylab="Global Active Power", xlab=""))
@@ -57,5 +60,5 @@ with(power2day, plot(datetime, Voltage, type="l"))
 # bottom right
 with(power2day, plot(datetime, Global_reactive_power, type="l"))
 
-dev.copy(png, file="plot4.png")
+# close device
 dev.off()

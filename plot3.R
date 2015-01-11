@@ -16,8 +16,8 @@ if (!file.exists("power2day.csv")) {
                                      "numeric", "numeric", "numeric", "numeric"), na.strings="?")
     
     # make a POSIXct column from date and time columns
-    # (would be more efficient to filter by Date and do this later in smaller table, but this
-    #   approach allows for further exploration, e.g., different date & time ranges from full dataset)
+    # (would be more faster to filter by Date and do this later in smaller table, but this approach
+    #   allows for further exploration, e.g., different date & time ranges from full dataset)
     power$datetime <- strptime(paste(power[,1],power[,2]), format="%d/%m/%Y %H:%M:%S")
     
     # extract the two desired days    
@@ -35,10 +35,10 @@ if (!file.exists("power2day.csv")) {
 # get a fresh start with default graphics device and settings
 graphics.off()
 
-# font size in example graphics smaller than default
-par(ps=12)
+# open PNG graphics device
+png(file="plot3.png")
 
-# create Plot 3 in the default device (screen)    
+# write Plot 3 to the PNG file   
 with(power2day, plot(datetime, Sub_metering_1, type="l", ylab="Energy sub metering", 
                      xlab="", col="black"))
 with(power2day, points(datetime, Sub_metering_2, type="l", col="red"))
@@ -46,6 +46,5 @@ with(power2day, points(datetime, Sub_metering_3, type="l", col="blue"))
 legend("topright", lwd=1, col=c("black", "red", "blue"), 
        legend=c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
 
-# write plot out to PNG file (default dims 480px X 480px)
-dev.copy(png, file="plot3.png")
+# close device
 dev.off()
