@@ -16,13 +16,13 @@ if (!file.exists("power2day.csv")) {
                                      "numeric", "numeric", "numeric", "numeric"), na.strings="?")
     
     # make a POSIXct column from date and time columns
-    # (would be more faster to filter by Date and do this later in smaller table, but this approach
+    # (would be faster to filter by Date and do this later in smaller table, but this approach
     #   allows for further exploration, e.g., different date & time ranges from full dataset)
     power$datetime <- strptime(paste(power[,1],power[,2]), format="%d/%m/%Y %H:%M:%S")
     
     # extract the two desired days    
     power2day <- power[as.Date(power$datetime) == "2007-02-01" | 
-                           as.Date(power$datetime) == "2007-02-02",  ]
+                       as.Date(power$datetime) == "2007-02-02",  ]
     # and save locally (for further exploration, other plots)
     write.csv(power2day, file="power2day.csv", row.names=FALSE)
 } else {
